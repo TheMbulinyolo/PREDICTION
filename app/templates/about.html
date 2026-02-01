@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}À propos · Paris Price ML{% endblock %}
+
+{% block content %}
+<div class="rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-soft p-6 sm:p-8">
+  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+    <div>
+      <div class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/20 px-3 py-1 text-xs">
+        🌱 Open source · Beginner-friendly
+      </div>
+      <h1 class="mt-4 text-2xl font-semibold">À propos du projet</h1>
+      <p class="mt-2 text-slate-300 max-w-3xl">
+        Ce projet est un <b>modèle open source</b> destiné à apprendre le Machine Learning sur un cas réel :
+        l’estimation du prix des appartements à Paris (DVF). Il est volontairement simple et conçu pour être
+        <b>amélioré par celles et ceux qui apprennent</b> (features, validation, modèles, déploiement).
+      </p>
+    </div>
+
+    <div class="rounded-2xl bg-slate-950/50 ring-1 ring-white/10 p-4 w-full sm:w-80">
+      <div class="text-xs text-slate-400">Modèle</div>
+      <div class="mt-1 font-medium">{{ model_name }}</div>
+      <div class="mt-3 text-xs text-slate-400">R² (log)</div>
+      <div class="mt-1 font-medium">{{ model_r2 }}</div>
+      <div class="mt-3 text-xs text-slate-400">Features</div>
+      <div class="mt-1 text-sm text-slate-200">{{ features|join(", ") }}</div>
+    </div>
+  </div>
+
+  <div class="mt-8 grid lg:grid-cols-3 gap-4">
+    <div class="rounded-2xl bg-slate-950/50 ring-1 ring-white/10 p-5">
+      <h2 class="text-sm font-semibold">Données</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        Transactions DVF publiques (ventes). Filtre : Paris (75) + appartements.
+      </p>
+    </div>
+
+    <div class="rounded-2xl bg-slate-950/50 ring-1 ring-white/10 p-5">
+      <h2 class="text-sm font-semibold">Objectif pédagogique</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        Comprendre tout le pipeline : nettoyage → features → modèle → métriques → déploiement.
+      </p>
+    </div>
+
+    <div class="rounded-2xl bg-slate-950/50 ring-1 ring-white/10 p-5">
+      <h2 class="text-sm font-semibold">Limites</h2>
+      <p class="mt-2 text-sm text-slate-300">
+        Pas d’étage/ascenseur/état du bien ni localisation fine → précision limitée.
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-8 rounded-2xl bg-indigo-500/10 ring-1 ring-indigo-500/20 p-6">
+    <h2 class="text-sm font-semibold text-indigo-200">Roadmap (améliorations possibles)</h2>
+    <ul class="mt-3 space-y-2 text-sm text-slate-200">
+      <li>🔜 Ajouter variables temporelles (mois/année) et split temporel</li>
+      <li>🔜 Ajouter code postal / géolocalisation (si disponible)</li>
+      <li>🔜 Comparer CatBoost vs LightGBM/XGBoost</li>
+      <li>🔜 Ajouter tests + API JSON + Docker + déploiement</li>
+      <li>🔜 Interface plus riche (carte, histos, explicabilité)</li>
+    </ul>
+  </div>
+
+  <!-- Liens importants -->
+  <div class="mt-8 rounded-2xl bg-white/5 ring-1 ring-white/10 shadow-soft p-6">
+    <h2 class="text-sm font-semibold text-slate-200 mb-4">🔗 Liens importants</h2>
+
+    <ul class="space-y-3 text-sm">
+        <li class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="text-lg">📦</span>
+            <span class="text-slate-300">Code source (GitHub)</span>
+        </div>
+        <a href="https://github.com/TheMbulinyolo/PREDICTION.git"
+            target="_blank"
+            class="text-indigo-400 hover:text-indigo-300 underline underline-offset-4">
+            Voir le repo
+        </a>
+        </li>
+
+        <li class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="text-lg">📊</span>
+            <span class="text-slate-300">Données DVF (data.gouv.fr)</span>
+        </div>
+        <a href="https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/"
+            target="_blank"
+            class="text-indigo-400 hover:text-indigo-300 underline underline-offset-4">
+            Accéder aux données
+        </a>
+        </li>
+
+        <li class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="text-lg">📘</span>
+            <span class="text-slate-300">Documentation CatBoost</span>
+        </div>
+        <a href="https://catboost.ai/docs/"
+            target="_blank"
+            class="text-indigo-400 hover:text-indigo-300 underline underline-offset-4">
+            Lire la doc
+        </a>
+        </li>
+
+        <li class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="text-lg">🎓</span>
+            <span class="text-slate-300">Scikit-learn (bases ML)</span>
+        </div>
+        <a href="https://scikit-learn.org/stable/"
+            target="_blank"
+            class="text-indigo-400 hover:text-indigo-300 underline underline-offset-4">
+            Documentation
+        </a>
+        </li>
+    </ul>
+
+    <p class="mt-4 text-xs text-slate-400">
+        Ces liens permettent de comprendre, reproduire et améliorer le modèle.
+        Le projet est volontairement ouvert aux débutants.
+    </p>
+    </div>
+
+  <div class="mt-6 flex gap-3">
+    <a href="/" class="inline-flex items-center justify-center rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-medium hover:bg-indigo-400 transition">
+      Retour
+    </a>
+  </div>
+</div>
+{% endblock %}

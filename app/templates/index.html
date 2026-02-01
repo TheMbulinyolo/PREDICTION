@@ -1,23 +1,107 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Estimation appartement Paris</title>
-</head>
-<body>
-  <h1>Estimer un appartement à Paris</h1>
+{% extends "base.html" %}
+{% block title %}Estimation · Paris Price ML{% endblock %}
 
-  <form method="post" action="/predict">
-    <label>Surface (m²)</label><br>
-    <input type="number" step="0.1" name="surface" required><br><br>
+{% block content %}
+<section class="grid lg:grid-cols-12 gap-6">
+  <!-- Left / Hero + Form -->
+  <div class="lg:col-span-7">
+    <div class="rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-soft">
+      <div class="p-6 sm:p-8">
+        <div class="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 text-indigo-300 ring-1 ring-indigo-500/20 px-3 py-1 text-xs">
+          ✨ Modèle ML · Paris (DVF)
+        </div>
 
-    <label>Nombre de pièces</label><br>
-    <input type="number" name="pieces" required><br><br>
+        <h1 class="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight">
+          Estime le prix d’un appartement à Paris
+        </h1>
+        <p class="mt-2 text-slate-300">
+          Entrez quelques caractéristiques simples pour obtenir une estimation du <span class="font-medium">prix au m²</span>
+          et du <span class="font-medium">prix total</span>.
+        </p>
 
-    <label>Arrondissement</label><br>
-    <input type="number" name="arrondissement" min="1" max="20" required><br><br>
+        <form method="post" action="/predict" class="mt-6 grid sm:grid-cols-3 gap-4">
+          <div>
+            <label class="text-sm text-slate-300">Surface (m²)</label>
+            <input name="surface" type="number" step="0.1" min="5" required
+              class="mt-2 w-full rounded-2xl bg-slate-950/60 ring-1 ring-white/10 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="ex: 45" />
+          </div>
 
-    <button type="submit">Prédire</button>
-  </form>
-</body>
-</html>
+          <div>
+            <label class="text-sm text-slate-300">Pièces</label>
+            <input name="pieces" type="number" min="0" required
+              class="mt-2 w-full rounded-2xl bg-slate-950/60 ring-1 ring-white/10 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="ex: 2" />
+          </div>
+
+          <div>
+            <label class="text-sm text-slate-300">Arrondissement</label>
+            <input name="arrondissement" type="number" min="1" max="20" required
+              class="mt-2 w-full rounded-2xl bg-slate-950/60 ring-1 ring-white/10 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="ex: 11" />
+          </div>
+
+          <div class="sm:col-span-3 flex flex-col sm:flex-row gap-3 mt-2">
+            <button type="submit"
+              class="inline-flex items-center justify-center rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-medium hover:bg-indigo-400 transition">
+              Prédire
+            </button>
+            <a href="/about"
+              class="inline-flex items-center justify-center rounded-2xl bg-white/10 px-5 py-3 text-sm font-medium hover:bg-white/15 transition ring-1 ring-white/10">
+              Caractéristiques du modèle
+            </a>
+          </div>
+        </form>
+
+        <div class="mt-6 rounded-2xl bg-emerald-500/10 ring-1 ring-emerald-500/20 p-4">
+          <p class="text-sm text-emerald-200">
+            <span class="font-semibold">Open source & pédagogique :</span>
+            ce projet vise à être amélioré par toute personne qui veut apprendre le ML
+            (features, validation, modèles, déploiement).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right / Cards -->
+  <div class="lg:col-span-5 space-y-6">
+    <div class="rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-soft p-6">
+      <h2 class="text-sm font-semibold text-slate-200">Ce que fait l’outil</h2>
+      <ul class="mt-3 space-y-2 text-sm text-slate-300">
+        <li class="flex gap-2"><span>✅</span><span>Prédit le <b>prix au m²</b> à partir de données DVF.</span></li>
+        <li class="flex gap-2"><span>✅</span><span>Retourne aussi un <b>prix total</b> (prix/m² × surface).</span></li>
+        <li class="flex gap-2"><span>✅</span><span>Cible entraînée en <b>log(prix)</b> pour plus de stabilité.</span></li>
+      </ul>
+    </div>
+
+    <div class="rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-soft p-6">
+      <h2 class="text-sm font-semibold text-slate-200">Caractéristiques du modèle</h2>
+      <div class="mt-3 grid grid-cols-2 gap-3 text-sm">
+        <div class="rounded-2xl bg-slate-950/50 ring-1 ring-white/10 p-4"><div class="text-slate-400 text-xs">Algorithme</div>
+          <div class="mt-1 font-medium">{{ model_name }}</div>
+        </div>
+        <div class="rounded-2xl bg-slate-950/50 ring-1 ring-white/10 p-4">
+          <div class="text-slate-400 text-xs">R² (log)</div>
+          <div class="mt-1 font-medium">{{ model_r2 }}</div>
+        </div>
+        <div class="rounded-2xl bg-slate-950/50 ring-1 ring-white/10 p-4 col-span-2">
+          <div class="text-slate-400 text-xs">Features</div>
+          <div class="mt-1 font-medium">{{ features|join(", ") }}</div>
+        </div>
+      </div>
+      <p class="mt-3 text-xs text-slate-400">
+        *Score indicatif : dépend de la période DVF et du nettoyage.
+      </p>
+    </div>
+
+    <div class="rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-soft p-6">
+      <h2 class="text-sm font-semibold text-slate-200">Limites connues</h2>
+      <p class="mt-3 text-sm text-slate-300">
+        Pas d’info sur l’étage, l’ascenseur, l’état du bien, la rue/quartier précis.
+        Les estimations restent donc approximatives.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

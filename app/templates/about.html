@@ -118,7 +118,61 @@
         Ces liens permettent de comprendre, reproduire et améliorer le modèle.
         Le projet est volontairement ouvert aux débutants.
     </p>
+  </div>
+  <!-- Règles de contribution -->
+  <div class="mt-8 rounded-2xl bg-white/5 ring-1 ring-white/10 shadow-soft p-6">
+    <h2 class="text-sm font-semibold text-slate-200 mb-4">🧩 Règles de contribution</h2>
+
+    <p class="text-sm text-slate-300 mb-4">
+      Afin de garantir la stabilité du projet et de faciliter les contributions,
+      la branche <b class="text-slate-100">main</b> est protégée.
+      Toute contribution doit respecter le workflow ci-dessous.
+    </p>
+
+    <ol class="space-y-4 text-sm text-slate-300 list-decimal list-inside">
+      <li>
+        <span class="font-medium text-slate-100">Créer une branche dédiée</span><br>
+        Les contributions ne doivent <b>jamais</b> être poussées directement sur
+        <code class="px-1.5 py-0.5 rounded bg-slate-900/70 ring-1 ring-white/10">main</code>.
+        Utilise une branche descriptive :
+        <div class="mt-1 text-xs text-slate-400">
+          feature/…, ml/…, ui/…, docs/…, fix/…
+        </div>
+      </li>
+
+      <li>
+        <span class="font-medium text-slate-100">Travailler sur ta branche</span><br>
+        Effectue tes modifications localement (données, features, modèle, interface)
+        en respectant l’esprit pédagogique du projet.
+      </li>
+
+      <li>
+        <span class="font-medium text-slate-100">Créer une Pull Request</span><br>
+        Une fois les changements terminés, ouvre une <b>Pull Request</b>
+        vers la branche <b>main</b> pour proposer ton amélioration.
+      </li>
+
+      <li>
+        <span class="font-medium text-slate-100">Décrire clairement la contribution</span><br>
+        Explique ce que tu as modifié, pourquoi, et les résultats obtenus
+        (nouvelle feature, score ML, amélioration UX, etc.).
+      </li>
+
+      <li>
+        <span class="font-medium text-slate-100">Revue et validation</span><br>
+        La Pull Request sera relue avant d’être fusionnée afin de garantir
+        la qualité et la cohérence du projet.
+      </li>
+    </ol>
+
+    <div class="mt-5 rounded-xl bg-amber-500/10 ring-1 ring-amber-500/20 p-4">
+      <p class="text-sm text-amber-200">
+        🔒 <b>Important :</b> les pushs directs sur <b>main</b> sont désactivés.
+        Ce fonctionnement permet à chacun de contribuer en toute sécurité,
+        même en étant débutant.
+      </p>
     </div>
+  </div>
 
   <div class="mt-6 flex gap-3">
     <a href="/" class="inline-flex items-center justify-center rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-medium hover:bg-indigo-400 transition">

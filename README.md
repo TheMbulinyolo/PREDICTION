@@ -1,152 +1,94 @@
-# 🏠 Prédiction du prix des appartements à Paris (Machine Learning)
+# 🏠 Paris Price ML — Prédiction du prix des appartements à Paris
 
-## 📌 Description du projet
+Projet open source de Machine Learning visant à prédire le prix au m² des appartements à Paris à partir des données publiques DVF (Demandes de Valeurs Foncières).
 
-Ce projet a pour objectif de prédire le prix au mètre carré des appartements à Paris à partir de données publiques de transactions immobilières, en utilisant des techniques de Machine Learning supervisé.
-
-Les données proviennent de la base DVF (Demandes de Valeurs Foncières) mise à disposition par l’État français.  
-Le projet couvre l’ensemble de la chaîne ML :
-- exploration des données
-- nettoyage et feature engineering
-- entraînement de modèles
-- évaluation des performances
-- amélioration progressive du modèle
-
-Ce projet a été réalisé dans un but pédagogique et portfolio, en partant d’un niveau débutant en ML.
+Ce projet a été conçu pour :
+- apprendre le Machine Learning appliqué
+- comprendre un pipeline ML complet (données → modèle → déploiement)
+- encourager les contributions de débutants
 
 ---
 
-## 🎯 Objectif
+## 🎯 Objectifs du projet
 
 - Prédire le prix au m² d’un appartement parisien
-- Comprendre l’impact des variables clés (surface, pièces, localisation, temps)
-- Construire un pipeline ML propre et reproductible
+- Fournir une interface web simple et moderne (FastAPI + Tailwind)
+- Servir de base d’apprentissage pour le ML, la data et le déploiement
+- Être amélioré progressivement par la communauté
 
 ---
 
-## 📂 Structure du projet
+## 🧠 Modèle de Machine Learning
 
-prix_appart_paris/
-│
-├── data/
-│   ├── raw/                # Données DVF brutes (.txt)
-│   └── processed/          # Données nettoyées et filtrées
-│
-├── notebooks/
-│   ├── 01_exploration.ipynb
-│   ├── 02_cleaning.ipynb
-│   └── 03_train_model.ipynb
-│
-├── models/
-│   └── prix_m2_model.pkl   # Modèle entraîné sauvegardé
-│
-├── README.md
-└── requirements.txt
-
----
-
-## 📊 Données utilisées
-
-- Source : DVF – Demandes de Valeurs Foncières
-- Période : ventes récentes (ex : 2023–2025)
-- Zone géographique : Paris (département 75)
-- Type de bien : Appartements uniquement
-
-### Variables principales :
-- Surface réelle bâtie
-- Nombre de pièces principales
-- Arrondissement (extrait du code postal)
-
----
-
-## 🧠 Méthodologie
-
-### 1️⃣ Prétraitement
-- Filtrage Paris + appartements
-- Nettoyage des valeurs manquantes
-- Correction des formats numériques (virgule → point)
-- Suppression des outliers extrêmes
-- Création de la variable cible : prix au m²
-
-### 2️⃣ Feature engineering
-- Extraction de l’arrondissement depuis le code postal
-- Transformation logarithmique de la cible (`log(prix_m2)`)
-- Ajout de variables temporelles (année, mois)
-
-### 3️⃣ Modèles testés
-- Régression linéaire (baseline)
-- CatBoost Regressor (modèle principal)
-
----
-
-## 🤖 Modèle final
-
-- Algorithme : CatBoostRegressor
-- Variable cible : log(prix_m2)
-- Features utilisées :
+- Type : Régression
+- Cible : log(prix_m2) (reconversion avec `exp`)
+- Algorithme : CatBoost Regressor (version actuelle)
+- Features principales :
   - Surface réelle bâtie
   - Nombre de pièces
   - Arrondissement
 
----
+### 📈 Performances (indicatives)
+- R² (log) ≈ 0.19
+- MAE ≈ 2987 €/m²
 
-## 📈 Résultats
-
-- R² (log-prix) ≈ 0.19
-- MAE ≈ 2432 €/m² (selon période)
-
-📌 Ce score est cohérent avec :
-- des données publiques
-- un nombre limité de features
-- l’absence d’informations privées (étage, ascenseur, quartier précis)
+> ⚠️ Les performances dépendent fortement des données DVF utilisées, du nettoyage et de la période.
 
 ---
 
-## 🧪 Évaluation
+## 🗂️ Structure du projet
 
-Les performances sont évaluées avec :
-- R² (qualité globale du modèle)
-- MAE (erreur moyenne en €/m², interprétable métier)
-
-Les métriques sont calculées dans le même espace que la cible (log ou réel).
-
----
-
-## ⚠️ Limites du projet
-
-- Pas d’information sur l’étage, l’ascenseur, l’état du bien
-- Localisation limitée à l’arrondissement
-- Données DVF parfois bruitées ou incomplètes
-- Le modèle ne remplace pas une expertise immobilière
-
----
-
-## 🚀 Pistes d’amélioration
-
-- Ajouter une localisation plus fine (quartier, coordonnées GPS)
-- Intégrer des données de transports (métro)
-- Ajouter des informations bâtiment (année de construction)
-- Tester un split temporel strict
-- Déployer une API de prédiction (FastAPI)
+PREDICTION/
+├── app/
+│   ├──main.py              # Application FastAPI
+│   └── templates/               # Templates HTML (Tailwind)
+│       ├── base.html
+│       ├── index.html
+│       ├── result.html
+│       └── about.html
+├── models/
+│   └── prix_m2_pipeline.pkl # Modèle ML entraîné
+├── notebooks/
+│   ├── 01_exploration.ipynb
+│   └── 02_train_model.ipynb
+├── requirements.txt
+├── vercel.json
+├── README.md
+└── CONTRIBUTING.md
 
 ---
 
-## 🛠️ Technologies utilisées
+## 🌐 Interface Web
 
-- Python
-- pandas, numpy
-- scikit-learn
-- CatBoost
-- Jupyter Notebook
+- Formulaire d’estimation (surface, pièces, arrondissement)
+- Page résultat avec prix au m² et prix total
+- Page About détaillant :
+  - caractéristiques du modèle
+  - limites
+  - roadmap
+  - liens utiles
+  - règles de contribution
+
+Interface réalisée avec Tailwind CSS (style moderne / dark).
 
 ---
 
-## 👤 Auteur
+## 🚀 Déploiement
 
-Projet réalisé par MBULINYOLO MALIYASASA EDDY 
+### ⚠️ Important
+Les modèles ML lourds (ex: CatBoost) ne sont pas adaptés aux Serverless Functions de la limite de taille (250 MB).
+
+### Déploiement recommandé
+- Frontend (UI) : Vercel
+- Backend ML (FastAPI + modèle) : Render / Railway / Fly.io
+
+### Alternative (tout-en-un)
+- Déployer l’intégralité du projet sur Render
 
 ---
 
-## 📜 Licence
+## ▶️ Lancer le projet en local
 
-Ce projet est fourni à des fins éducatives et expérimentales.
+```bash
+pip install -r requirements.txt
+uvicorn api.main:app --reload

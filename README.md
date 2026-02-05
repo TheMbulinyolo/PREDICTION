@@ -91,4 +91,4 @@ Les modèles ML lourds (ex: CatBoost) ne sont pas adaptés aux Serverless Functi
 
 ```bash
 pip install -r requirements.txt
-uvicorn api.main:app --reload
+uvicorn app.main:app --reload
